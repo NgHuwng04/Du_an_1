@@ -19,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_welcome);
 
-        btnGetstarteed = findViewById(R.id.btnGetstarteed);
+        btnGetstarteed = findViewById(R.id.btnGetstarted);
         btnGetstarteed.setOnClickListener(v ->{
             Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
             startActivity(intent);

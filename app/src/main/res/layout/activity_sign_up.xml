@@ -39,7 +39,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="Zshop123@gmail.com"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -52,7 +51,6 @@
                 android:id="@+id/edtUsernameSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Zshop123"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -66,8 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:layout_marginBottom="10dp"
-                android:text="12345678"/>
+                android:layout_marginBottom="10dp" />
             <Button
                 android:id="@+id/btnSignUp"
                 android:layout_width="match_parent"
@@ -78,6 +75,16 @@
                 android:backgroundTint="@color/orange"
                 android:text="Sign up"
                 android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tvLogIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="Login"
+                android:textColor="@color/orange"
+                android:textSize="17sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
