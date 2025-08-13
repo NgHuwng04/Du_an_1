@@ -6,7 +6,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.SharedPreferences;
+import android.database.Cursor; // Import Cursor
+import android.database.sqlite.SQLiteDatabase; // Import SQLiteDatabase
+import com.hungnn.du_an_1.Database.DbHelper; // Import DbHelper
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvSignUp;
     private EditText edtEmailLogin, edtPasswordLogin;
     private Button btnLogin;
+    private DbHelper dbHelper; // Khai báo DbHelper
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,9 @@ public class LoginActivity extends AppCompatActivity {
         edtEmailLogin = findViewById(R.id.edtEmailLogin);
         edtPasswordLogin = findViewById(R.id.edtPasswordLogin);
         btnLogin = findViewById(R.id.btnLogin);
+
+        // Khởi tạo DbHelper
+        dbHelper = new DbHelper(this);
 
         // Thiết lập padding cho System Bars
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -52,21 +58,23 @@ public class LoginActivity extends AppCompatActivity {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ Email và Mật khẩu", Toast.LENGTH_SHORT).show();
             } else {
-                // Lấy SharedPreferences để lấy dữ liệu đã lưu
-                SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
-                String savedEmail = sharedPreferences.getString("email", ""); // "" là giá trị mặc định nếu không tìm thấy
-                String savedPassword = sharedPreferences.getString("password", ""); // "" là giá trị mặc định nếu không tìm thấy
+                SQLiteDatabase db = dbHelper.getReadableDatabase(); // Lấy cơ sở dữ liệu có thể đọc
+                String[] projection = {"email", "mat_khau"};
+                String selection = "email = ? AND mat_khau = ?";
+                String[] selectionArgs = {email, password};
 
-                // So sánh thông tin nhập vào với dữ liệu đã lưu
-                if (email.equals(savedEmail) && password.equals(savedPassword)) {
+                Cursor cursor = db.query("nguoi_dung", projection, selection, selectionArgs, null, null, null);
+
+                if (cursor.getCount() > 0) {
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    // Chuyển đến màn hình chính hoặc màn hình tiếp theo (ví dụ: MainActivity)
-                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                     startActivity(intent);
-                     finish();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Email hoặc Mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                 }
+                cursor.close();
+                db.close();
             }
         });
     }

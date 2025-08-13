@@ -1,5 +1,6 @@
 package com.hungnn.du_an_1.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -20,6 +21,15 @@ public class DbHelper extends SQLiteOpenHelper {
                 "mat_khau TEXT," +
                 "vai_tro TEXT CHECK(vai_tro IN ('khach_hang', 'chu_cua_hang'))," +
                 "trang_thai TEXT DEFAULT 'hoat_dong' CHECK(trang_thai IN ('hoat_dong', 'bi_khoa')))");
+
+        // Chèn dữ liệu admin mặc định
+        ContentValues adminValues = new ContentValues();
+        adminValues.put("ho_ten", "Admin");
+        adminValues.put("email", "admin@zshop.com");
+        adminValues.put("mat_khau", "123");
+        adminValues.put("vai_tro", "chu_cua_hang");
+        adminValues.put("trang_thai", "hoat_dong");
+        db.insert("nguoi_dung", null, adminValues);
 
         // 2. Bảng danh mục
         db.execSQL("CREATE TABLE danh_muc (" +

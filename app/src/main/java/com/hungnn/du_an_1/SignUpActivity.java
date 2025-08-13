@@ -1,12 +1,15 @@
 package com.hungnn.du_an_1;
 
+import android.content.ContentValues; // Import ContentValues
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase; // Import SQLiteDatabase
+import com.hungnn.du_an_1.Database.DbHelper; // Import DbHelper
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -17,6 +20,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextView tvLogin;
     private EditText edtEmailSignUp, edtUsernameSignUp, edtPasswordSignUp;
     private Button btnSignUp;
+    private DbHelper dbHelper; // Khai báo DbHelper
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +35,16 @@ public class SignUpActivity extends AppCompatActivity {
         edtPasswordSignUp = findViewById(R.id.edtPasswordSignUp);
         btnSignUp = findViewById(R.id.btnSignUp);
 
+        // Khởi tạo DbHelper
+        dbHelper = new DbHelper(this);
+
         // Thiết lập padding cho System Bars
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         tvLogin.setOnClickListener(v -> {
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -51,22 +59,25 @@ public class SignUpActivity extends AppCompatActivity {
             if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(SignUpActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             } else {
-                // Lấy SharedPreferences
-                SharedPreferences sharedPreferences = getSharedPreferences("user_data", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                SQLiteDatabase db = dbHelper.getWritableDatabase(); // Lấy cơ sở dữ liệu có thể ghi
+                ContentValues values = new ContentValues();
+                values.put("ho_ten", username);
+                values.put("email", email);
+                values.put("mat_khau", password);
+                values.put("vai_tro", "khach_hang"); // Vai trò mặc định
+                values.put("trang_thai", "hoat_dong"); // Trạng thái mặc định
 
-                // Lưu email và mật khẩu của người dùng mới đăng ký
-                // Lưu ý: Đây là cách đơn giản, nhưng không an toàn cho mật khẩu trong thực tế.
-                editor.putString("email", email);
-                editor.putString("password", password);
-                editor.apply();
+                long result = db.insert("nguoi_dung", null, values); // Chèn vào cơ sở dữ liệu
+                db.close(); // Đóng cơ sở dữ liệu
 
-                Toast.makeText(SignUpActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-
-                // Chuyển về màn hình đăng nhập sau khi đăng ký thành công
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                if (result != -1) {
+                    Toast.makeText(SignUpActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Đăng ký thất bại. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
