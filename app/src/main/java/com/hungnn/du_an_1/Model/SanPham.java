@@ -7,6 +7,7 @@ public class SanPham {
     private double gia;
     private int soLuongTon;
     private int maDanhMuc;
+    private int hinhAnhResId; // truyền vào hình ảnh lấy từ Drawable
 
     public SanPham(int maSanPham, String tenSanPham, String moTa, double gia, int soLuongTon, int maDanhMuc) {
         this.maSanPham = maSanPham;
@@ -15,6 +16,16 @@ public class SanPham {
         this.gia = gia;
         this.soLuongTon = soLuongTon;
         this.maDanhMuc = maDanhMuc;
+    }
+
+    public SanPham(int maSanPham, String tenSanPham, String moTa, double gia, int soLuongTon, int maDanhMuc, int hinhAnhResId) {
+        this.maSanPham = maSanPham;
+        this.tenSanPham = tenSanPham;
+        this.moTa = moTa;
+        this.gia = gia;
+        this.soLuongTon = soLuongTon;
+        this.maDanhMuc = maDanhMuc;
+        this.hinhAnhResId = hinhAnhResId;
     }
 
     public SanPham() {
@@ -66,5 +77,13 @@ public class SanPham {
 
     public void setMaDanhMuc(int maDanhMuc) {
         this.maDanhMuc = maDanhMuc;
+    }
+
+    public int getHinhAnhResId() {
+        return hinhAnhResId;
+    }
+
+    public void setHinhAnhResId(int hinhAnhResId) {
+        this.hinhAnhResId = hinhAnhResId;
     }
 }
