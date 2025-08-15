@@ -6,13 +6,17 @@ public class BaiViet {
     private String noiDung;
     private String ngayDang;
     private int maTacGia;
+    private String tenTacGia;
+    private String hinhAnh;
 
-    public BaiViet(int maBaiViet, String tieuDe, String noiDung, String ngayDang, int maTacGia) {
+    public BaiViet(int maBaiViet, String tieuDe, String noiDung, String ngayDang, int maTacGia, String tenTacGia, String hinhAnh) {
         this.maBaiViet = maBaiViet;
         this.tieuDe = tieuDe;
         this.noiDung = noiDung;
         this.ngayDang = ngayDang;
         this.maTacGia = maTacGia;
+        this.tenTacGia = tenTacGia;
+        this.hinhAnh = hinhAnh;
     }
 
     public BaiViet() {
@@ -56,5 +60,21 @@ public class BaiViet {
 
     public void setMaTacGia(int maTacGia) {
         this.maTacGia = maTacGia;
+    }
+
+    public String getTenTacGia() {
+        return tenTacGia;
+    }
+
+    public void setTenTacGia(String tenTacGia) {
+        this.tenTacGia = tenTacGia;
+    }
+
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
     }
 }

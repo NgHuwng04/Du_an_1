@@ -37,22 +37,25 @@
 
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".ActivityPhu.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".FavoritesActivity"
+            android:name=".ActivityPhu.FavoritesActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ActivityPhu.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".HistoryActivity"
+            android:name=".ActivityPhu.HistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
+            android:name=".ActivityPhu.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".ProductDetailActivity"
+            android:name=".ActivityPhu.ProductDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.HotNewsActivity"
             android:exported="false" />
     </application>
 

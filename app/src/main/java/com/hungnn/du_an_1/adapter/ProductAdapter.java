@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hungnn.du_an_1.R;
 import com.hungnn.du_an_1.Model.SanPham;
-import com.hungnn.du_an_1.ProductDetailActivity;
+import com.hungnn.du_an_1.ActivityPhu.ProductDetailActivity;
 
 import java.text.NumberFormat;
 import java.util.List;

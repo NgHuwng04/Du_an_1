@@ -1,4 +1,4 @@
-package com.hungnn.du_an_1;
+package com.hungnn.du_an_1.ActivityPhu;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hungnn.du_an_1.Model.SanPham;
+import com.hungnn.du_an_1.R;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
