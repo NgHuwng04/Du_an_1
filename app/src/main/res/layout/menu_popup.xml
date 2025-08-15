@@ -20,6 +20,28 @@
         android:paddingBottom="8dp">
 
         <LinearLayout
+            android:id="@+id/popup_hot_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:minWidth="180dp"
+            android:gravity="center_vertical"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_hot_new"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hot News"
+                android:textSize="15sp"
+                android:textColor="#222222"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/popup_my_member"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

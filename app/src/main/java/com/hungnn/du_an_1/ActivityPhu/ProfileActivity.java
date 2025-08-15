@@ -1,25 +1,20 @@
-package com.hungnn.du_an_1;
+package com.hungnn.du_an_1.ActivityPhu;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-public class HistoryActivity extends AppCompatActivity {
+import com.hungnn.du_an_1.R;
 
-    private RecyclerView recyclerViewHistory;
+public class ProfileActivity extends AppCompatActivity {
+
     private ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
-
-        // Khởi tạo RecyclerView cho lịch sử
-        recyclerViewHistory = findViewById(R.id.recyclerViewHistory);
-        recyclerViewHistory.setLayoutManager(new LinearLayoutManager(this));
+        setContentView(R.layout.activity_profile);
 
         // Khởi tạo nút Back
         btnBack = findViewById(R.id.btnBack);
@@ -30,6 +25,6 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Tải lịch sử mua hàng vào RecyclerView
+        // TODO: Khởi tạo các view và xử lý logic profile
     }
 }

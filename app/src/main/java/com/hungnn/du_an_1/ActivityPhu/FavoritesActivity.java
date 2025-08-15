@@ -1,4 +1,4 @@
-package com.hungnn.du_an_1;
+package com.hungnn.du_an_1.ActivityPhu;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.hungnn.du_an_1.R;
 
 public class FavoritesActivity extends AppCompatActivity {
 
