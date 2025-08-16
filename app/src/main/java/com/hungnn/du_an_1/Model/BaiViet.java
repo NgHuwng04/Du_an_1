@@ -1,6 +1,8 @@
 package com.hungnn.du_an_1.Model;
 
-public class BaiViet {
+import java.io.Serializable;
+
+public class BaiViet implements Serializable {
     private int maBaiViet;
     private String tieuDe;
     private String noiDung;

@@ -20,19 +20,24 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".WelcomeActivity"
-            android:exported="true"/>
         <activity
             android:name=".ActivityPhu.HomeActivity"
             android:exported="false" />
@@ -53,6 +58,9 @@
             android:exported="false" />
         <activity
             android:name=".ActivityPhu.HotNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.NewsDetailActivity"
             android:exported="false" />
     </application>
 
