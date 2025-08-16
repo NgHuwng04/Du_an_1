@@ -21,7 +21,9 @@ import com.hungnn.du_an_1.ActivityPhu.FavoritesActivity;
 import com.hungnn.du_an_1.ActivityPhu.HistoryActivity;
 import com.hungnn.du_an_1.ActivityPhu.ProfileActivity;
 import com.hungnn.du_an_1.ActivityPhu.HotNewsActivity;
+import com.hungnn.du_an_1.LoginActivity;
 import com.hungnn.du_an_1.Model.SanPham;
+import com.hungnn.du_an_1.Utils.LogoutManager;
 import com.hungnn.du_an_1.adapter.ProductAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,12 +166,13 @@ public class MainActivity extends AppCompatActivity {
             menuPopupWindow.setElevation(16f);
 
             content.findViewById(R.id.popup_hot_news).setOnClickListener(x -> {
+                Toast.makeText(MainActivity.this, "Tin tức mới nhất", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HotNewsActivity.class);
                 startActivity(intent);
                 menuPopupWindow.dismiss();
             });
             content.findViewById(R.id.popup_my_member).setOnClickListener(x -> {
-                Toast.makeText(MainActivity.this, "My Member", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Quản lý khách hàng", Toast.LENGTH_SHORT).show();
                 menuPopupWindow.dismiss();
             });
             content.findViewById(R.id.popup_my_offers).setOnClickListener(x -> {
@@ -185,7 +188,8 @@ public class MainActivity extends AppCompatActivity {
                 menuPopupWindow.dismiss();
             });
             content.findViewById(R.id.popup_logout).setOnClickListener(x -> {
-                Toast.makeText(MainActivity.this, "Log Out", Toast.LENGTH_SHORT).show();
+                // Thực hiện đăng xuất
+                performLogout();
                 menuPopupWindow.dismiss();
             });
 
@@ -322,5 +326,13 @@ public class MainActivity extends AppCompatActivity {
         lineSamsung.setBackgroundColor(0x00000000);
         lineXiaomi.setBackgroundColor(0x00000000);
         lineOppo.setBackgroundColor(0x00000000);
+    }
+
+    /**
+     * Thực hiện đăng xuất tài khoản
+     */
+    private void performLogout() {
+        // Sử dụng LogoutManager để thực hiện đăng xuất
+        LogoutManager.performLogout(this);
     }
 }
