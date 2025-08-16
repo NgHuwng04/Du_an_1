@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hungnn.du_an_1.Model.SanPham;
 import com.hungnn.du_an_1.R;
+import com.hungnn.du_an_1.Utils.FavoritesManager;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -21,6 +22,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView tvProductName, tvProductPrice;
     private Button btnAddToCart;
     private SanPham sanPham;
+    private FavoritesManager favoritesManager;
+    private boolean isProcessingFavoriteClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +33,21 @@ public class ProductDetailActivity extends AppCompatActivity {
         // Lấy dữ liệu sản phẩm từ Intent
         int maSanPham = getIntent().getIntExtra("maSanPham", 0);
         String tenSanPham = getIntent().getStringExtra("tenSanPham");
+        String moTa = getIntent().getStringExtra("moTa");
         double gia = getIntent().getDoubleExtra("gia", 0);
         int hinhAnhResId = getIntent().getIntExtra("hinhAnhResId", 0);
+        int maDanhMuc = getIntent().getIntExtra("maDanhMuc", 0);
 
-        // Tạo đối tượng SanPham
-        sanPham = new SanPham(maSanPham, tenSanPham, "", gia, 0, 0, hinhAnhResId);
+        // Tạo đối tượng SanPham với đầy đủ thông tin
+        sanPham = new SanPham(maSanPham, tenSanPham, moTa != null ? moTa : "", gia, 0, maDanhMuc, hinhAnhResId);
+
+        // Khởi tạo FavoritesManager
+        favoritesManager = FavoritesManager.getInstance(this);
 
         initViews();
         displayProductInfo();
         setClickListeners();
+        updateFavoriteButtonState();
     }
 
     private void initViews() {
@@ -77,16 +86,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Toggle trạng thái yêu thích
-                if (btnFavorite.getTag() == null || !(Boolean) btnFavorite.getTag()) {
-                    btnFavorite.setImageResource(R.drawable.ic_favorites);
-                    btnFavorite.setTag(true);
-                    Toast.makeText(ProductDetailActivity.this, "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
-                } else {
-                    btnFavorite.setImageResource(R.drawable.ic_favorites);
-                    btnFavorite.setTag(false);
-                    Toast.makeText(ProductDetailActivity.this, "Đã bỏ khỏi yêu thích", Toast.LENGTH_SHORT).show();
-                }
+                toggleFavorite();
             }
         });
 
@@ -98,5 +98,51 @@ public class ProductDetailActivity extends AppCompatActivity {
                 // TODO: Implement logic thêm vào giỏ hàng
             }
         });
+    }
+    
+    /**
+     * Cập nhật trạng thái nút favorite
+     */
+    private void updateFavoriteButtonState() {
+        if (favoritesManager.isFavorite(sanPham.getMaSanPham())) {
+            btnFavorite.setImageResource(R.drawable.ic_favorites_filled);
+            btnFavorite.setTag(true);
+        } else {
+            btnFavorite.setImageResource(R.drawable.ic_favorites);
+            btnFavorite.setTag(false);
+        }
+    }
+    
+    /**
+     * Toggle trạng thái yêu thích
+     */
+    private void toggleFavorite() {
+        // Kiểm tra nếu đang xử lý click thì bỏ qua
+        if (isProcessingFavoriteClick) {
+            return;
+        }
+        
+        isProcessingFavoriteClick = true;
+        
+        boolean isCurrentlyFavorite = favoritesManager.isFavorite(sanPham.getMaSanPham());
+        
+        if (isCurrentlyFavorite) {
+            // Nếu đã yêu thích thì xóa khỏi yêu thích
+            if (favoritesManager.removeFromFavorites(sanPham.getMaSanPham())) {
+                btnFavorite.setImageResource(R.drawable.ic_favorites);
+                btnFavorite.setTag(false);
+                Toast.makeText(this, "Đã bỏ khỏi yêu thích", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Nếu chưa yêu thích thì thêm vào yêu thích
+            if (favoritesManager.addToFavorites(sanPham)) {
+                btnFavorite.setImageResource(R.drawable.ic_favorites_filled);
+                btnFavorite.setTag(true);
+                Toast.makeText(this, "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
+            }
+        }
+        
+        // Reset trạng thái sau 500ms
+        new android.os.Handler().postDelayed(() -> isProcessingFavoriteClick = false, 500);
     }
 }
