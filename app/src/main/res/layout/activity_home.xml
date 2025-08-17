@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context=".HomeActivity">
+    tools:context=".ActivityPhu.HomeActivity">
 
     <!-- Top Section with Menu and Cart -->
     <LinearLayout

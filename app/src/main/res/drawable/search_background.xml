@@ -3,7 +3,7 @@
     android:shape="rectangle">
     
     <!-- Màu nền của thanh search -->
-    <solid android:color="@android:color/darker_gray" />
+    <solid android:color="#D0CDCD" />
     
     <!-- Bo tròn các góc -->
     <corners android:radius="25dp" />

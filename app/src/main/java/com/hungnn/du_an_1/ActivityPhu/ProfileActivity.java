@@ -1,25 +1,20 @@
-package com.hungnn.du_an_1;
+package com.hungnn.du_an_1.ActivityPhu;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-public class FavoritesActivity extends AppCompatActivity {
+import com.hungnn.du_an_1.R;
 
-    private RecyclerView recyclerViewFavorites;
+public class ProfileActivity extends AppCompatActivity {
+
     private ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorites);
-
-        // Khởi tạo RecyclerView cho danh sách yêu thích
-        recyclerViewFavorites = findViewById(R.id.recyclerViewFavorites);
-        recyclerViewFavorites.setLayoutManager(new LinearLayoutManager(this));
+        setContentView(R.layout.activity_profile);
 
         // Khởi tạo nút Back
         btnBack = findViewById(R.id.btnBack);
@@ -30,6 +25,6 @@ public class FavoritesActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Tải danh sách sản phẩm yêu thích vào RecyclerView
+        // TODO: Khởi tạo các view và xử lý logic profile
     }
 }

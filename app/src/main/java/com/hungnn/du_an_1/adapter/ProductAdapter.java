@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hungnn.du_an_1.R;
 import com.hungnn.du_an_1.Model.SanPham;
-import com.hungnn.du_an_1.ProductDetailActivity;
+import com.hungnn.du_an_1.ActivityPhu.ProductDetailActivity;
+
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -53,7 +54,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 Intent intent = new Intent(context, ProductDetailActivity.class);
                 intent.putExtra("maSanPham", sanPham.getMaSanPham());
                 intent.putExtra("tenSanPham", sanPham.getTenSanPham());
+                intent.putExtra("moTa", sanPham.getMoTa());
                 intent.putExtra("gia", sanPham.getGia());
+                intent.putExtra("maDanhMuc", sanPham.getMaDanhMuc());
                 intent.putExtra("hinhAnhResId", sanPham.getHinhAnhResId());
                 context.startActivity(intent);
             }
