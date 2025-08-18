@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.hungnn.du_an_1.LoginActivity;
+import com.hungnn.du_an_1.Utils.UserManager;
 
 /**
  * Utility class để quản lý chức năng đăng xuất chung cho toàn bộ ứng dụng
@@ -17,6 +18,10 @@ public class LogoutManager {
      */
     public static void performLogout(Activity activity) {
         if (activity == null) return;
+        
+        // Xóa thông tin người dùng
+        UserManager userManager = UserManager.getInstance(activity);
+        userManager.clearUserInfo();
         
         // Hiển thị thông báo xác nhận
         Toast.makeText(activity, "Đang đăng xuất...", Toast.LENGTH_SHORT).show();
@@ -38,6 +43,10 @@ public class LogoutManager {
      */
     public static void performLogout(Activity activity, String message) {
         if (activity == null) return;
+        
+        // Xóa thông tin người dùng
+        UserManager userManager = UserManager.getInstance(activity);
+        userManager.clearUserInfo();
         
         // Hiển thị thông báo tùy chỉnh
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
