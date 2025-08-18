@@ -9,6 +9,7 @@ import android.widget.Toast;
 import android.database.Cursor; // Import Cursor
 import android.database.sqlite.SQLiteDatabase; // Import SQLiteDatabase
 import com.hungnn.du_an_1.Database.DbHelper; // Import DbHelper
+import com.hungnn.du_an_1.Utils.UserManager; // Import UserManager
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,13 +60,22 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ Email và Mật khẩu", Toast.LENGTH_SHORT).show();
             } else {
                 SQLiteDatabase db = dbHelper.getReadableDatabase(); // Lấy cơ sở dữ liệu có thể đọc
-                String[] projection = {"email", "mat_khau"};
+                String[] projection = {"ma_nguoi_dung", "ho_ten", "email", "mat_khau", "vai_tro"};
                 String selection = "email = ? AND mat_khau = ?";
                 String[] selectionArgs = {email, password};
 
                 Cursor cursor = db.query("nguoi_dung", projection, selection, selectionArgs, null, null, null);
 
                 if (cursor.getCount() > 0) {
+                    cursor.moveToFirst();
+                    int userId = cursor.getInt(cursor.getColumnIndexOrThrow("ma_nguoi_dung"));
+                    String userName = cursor.getString(cursor.getColumnIndexOrThrow("ho_ten"));
+                    String userRole = cursor.getString(cursor.getColumnIndexOrThrow("vai_tro"));
+                    
+                    // Lưu thông tin người dùng
+                    UserManager userManager = UserManager.getInstance(this);
+                    userManager.saveUserInfo(userId, email, userRole, userName);
+                    
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

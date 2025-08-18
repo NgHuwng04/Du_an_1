@@ -21,9 +21,12 @@ import com.hungnn.du_an_1.ActivityPhu.FavoritesActivity;
 import com.hungnn.du_an_1.ActivityPhu.HistoryActivity;
 import com.hungnn.du_an_1.ActivityPhu.ProfileActivity;
 import com.hungnn.du_an_1.ActivityPhu.HotNewsActivity;
+import com.hungnn.du_an_1.ActivityPhu.MemberManagementActivity;
+import com.hungnn.du_an_1.ActivityPhu.AllProductsActivity;
 import com.hungnn.du_an_1.LoginActivity;
 import com.hungnn.du_an_1.Model.SanPham;
 import com.hungnn.du_an_1.Utils.LogoutManager;
+import com.hungnn.du_an_1.Utils.UserManager;
 import com.hungnn.du_an_1.adapter.ProductAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnCart;
     private ImageButton btnMenu;
     private PopupWindow menuPopupWindow;
+    private TextView tvSeemore;
     
     // Danh sách tất cả sản phẩm
     private List<SanPham> allProducts;
@@ -49,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        // Kiểm tra đăng nhập
+        checkLoginStatus();
 
         initViews();
         recyclerViewProducts = findViewById(R.id.recyclerViewProducts);
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         setNavigationIconClickListeners();
         setCartClickListener();
         setMenuClickListener();
+        setSeeMoreClickListener();
     }
 
     private void initViews() {
@@ -89,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         iconHistory = findViewById(R.id.icon_history);
         btnCart = findViewById(R.id.btnCart);
         btnMenu = findViewById(R.id.btnMenu);
+        tvSeemore = findViewById(R.id.tvSeemore);
     }
 
     //Hàm tạo danh sách mẫu hiển thị recycleView trong activity_main
@@ -165,28 +174,63 @@ public class MainActivity extends AppCompatActivity {
             menuPopupWindow.setOutsideTouchable(true);
             menuPopupWindow.setElevation(16f);
 
+            // Lấy thông tin vai trò người dùng
+            UserManager userManager = UserManager.getInstance(this);
+            boolean isAdmin = userManager.isAdmin();
+
+            // Ẩn/hiện các mục menu dựa trên vai trò
+            View memberManagement = content.findViewById(R.id.popup_my_member);
+            View productStorage = content.findViewById(R.id.popup_product_storage);
+            View billManager = content.findViewById(R.id.popup_bill_manager);
+            View doanhThu = content.findViewById(R.id.popup_doanhthu);
+
+            if (!isAdmin) {
+                // Ẩn các mục trong menu nếu không phải là admin
+                memberManagement.setVisibility(View.GONE);
+                productStorage.setVisibility(View.GONE);
+                billManager.setVisibility(View.GONE);
+                doanhThu.setVisibility(View.GONE);
+            }
+
             content.findViewById(R.id.popup_hot_news).setOnClickListener(x -> {
                 Toast.makeText(MainActivity.this, "Tin tức mới nhất", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, HotNewsActivity.class);
                 startActivity(intent);
                 menuPopupWindow.dismiss();
             });
-            content.findViewById(R.id.popup_my_member).setOnClickListener(x -> {
-                Toast.makeText(MainActivity.this, "Quản lý khách hàng", Toast.LENGTH_SHORT).show();
-                menuPopupWindow.dismiss();
-            });
+            
+            if (isAdmin) {
+                content.findViewById(R.id.popup_my_member).setOnClickListener(x -> {
+                    Intent intent = new Intent(MainActivity.this, MemberManagementActivity.class);
+                    startActivity(intent);
+                    menuPopupWindow.dismiss();
+                });
+                
+                content.findViewById(R.id.popup_product_storage).setOnClickListener(x -> {
+                    Toast.makeText(MainActivity.this, "Quản lý sản phẩm", Toast.LENGTH_SHORT).show();
+                    menuPopupWindow.dismiss();
+                });
+                
+                content.findViewById(R.id.popup_bill_manager).setOnClickListener(x -> {
+                    Toast.makeText(MainActivity.this, "Quản lý đơn hàng", Toast.LENGTH_SHORT).show();
+                    menuPopupWindow.dismiss();
+                });
+                content.findViewById(R.id.popup_doanhthu).setOnClickListener(x -> {
+                    Toast.makeText(MainActivity.this, "Thống kê doanh thu", Toast.LENGTH_SHORT).show();
+                    menuPopupWindow.dismiss();
+                });
+            }
+            
             content.findViewById(R.id.popup_my_offers).setOnClickListener(x -> {
                 Toast.makeText(MainActivity.this, "My offers", Toast.LENGTH_SHORT).show();
                 menuPopupWindow.dismiss();
             });
-            content.findViewById(R.id.popup_product_storage).setOnClickListener(x -> {
-                Toast.makeText(MainActivity.this, "Quản lý sản phẩm", Toast.LENGTH_SHORT).show();
-                menuPopupWindow.dismiss();
-            });
+            
             content.findViewById(R.id.popup_setting).setOnClickListener(x -> {
                 Toast.makeText(MainActivity.this, "Setting", Toast.LENGTH_SHORT).show();
                 menuPopupWindow.dismiss();
             });
+            
             content.findViewById(R.id.popup_logout).setOnClickListener(x -> {
                 // Thực hiện đăng xuất
                 performLogout();
@@ -326,6 +370,33 @@ public class MainActivity extends AppCompatActivity {
         lineSamsung.setBackgroundColor(0x00000000);
         lineXiaomi.setBackgroundColor(0x00000000);
         lineOppo.setBackgroundColor(0x00000000);
+    }
+
+    /**
+     * Thiết lập click listener cho nút "See more"
+     */
+    private void setSeeMoreClickListener() {
+        tvSeemore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Chuyển đến màn hình hiển thị tất cả sản phẩm
+                Intent intent = new Intent(MainActivity.this, AllProductsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * Kiểm tra trạng thái đăng nhập
+     */
+    private void checkLoginStatus() {
+        UserManager userManager = UserManager.getInstance(this);
+        if (!userManager.isLoggedIn()) {
+            // Nếu chưa đăng nhập, chuyển về LoginActivity
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     /**

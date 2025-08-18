@@ -62,6 +62,18 @@
         <activity
             android:name=".ActivityPhu.NewsDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.MemberManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.EditMemberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.AddMemberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.AllProductsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
