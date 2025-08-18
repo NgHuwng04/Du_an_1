@@ -31,6 +31,7 @@ public class DbHelper extends SQLiteOpenHelper {
         adminValues.put("trang_thai", "hoat_dong");
         db.insert("nguoi_dung", null, adminValues);
 
+
         // 2. Bảng danh mục
         db.execSQL("CREATE TABLE danh_muc (" +
                 "ma_danh_muc INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -118,4 +119,5 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS nguoi_dung");
         onCreate(db);
     }
+
 }

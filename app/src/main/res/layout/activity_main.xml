@@ -107,26 +107,24 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:orientation="vertical"
-					android:layout_marginEnd="5dp"
+					android:layout_marginEnd="16dp"
 					android:clickable="true"
 					android:focusable="true"
-					android:layout_weight="1"
 					android:background="?android:attr/selectableItemBackground">
 
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="IPHONE"
-						android:textSize="15sp"
+						android:textSize="16sp"
 						android:textStyle="bold"
 						android:textColor="#FA4A0C"
-						android:layout_gravity="center_horizontal"
-						android:padding="8dp"/>
+						android:padding="8dp" />
 
 					<View
 						android:layout_width="match_parent"
 						android:layout_height="2dp"
-						android:background="#FA4A0C"/>
+						android:background="#FA4A0C" />
 				</LinearLayout>
 
 				<LinearLayout
@@ -134,19 +132,17 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:orientation="vertical"
-					android:layout_marginEnd="5dp"
+					android:layout_marginEnd="16dp"
 					android:clickable="true"
 					android:focusable="true"
-					android:layout_weight="1"
 					android:background="?android:attr/selectableItemBackground">
 
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="SAMSUNG"
-						android:textSize="15sp"
+						android:textSize="16sp"
 						android:textColor="@android:color/black"
-						android:layout_gravity="center_horizontal"
 						android:padding="8dp" />
 
 					<View
@@ -160,19 +156,17 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:orientation="vertical"
-					android:layout_marginEnd="5dp"
+					android:layout_marginEnd="16dp"
 					android:clickable="true"
 					android:focusable="true"
-					android:layout_weight="1"
 					android:background="?android:attr/selectableItemBackground">
 
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="XIAOMI"
-						android:textSize="15sp"
+						android:textSize="16sp"
 						android:textColor="@android:color/black"
-						android:layout_gravity="center_horizontal"
 						android:padding="8dp" />
 
 					<View
@@ -186,19 +180,18 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:orientation="vertical"
+					android:layout_marginEnd="16dp"
 					android:clickable="true"
 					android:focusable="true"
-					android:layout_weight="1"
 					android:background="?android:attr/selectableItemBackground">
 
 					<TextView
-						android:layout_width="wrap_content"
+						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
+						android:padding="8dp"
 						android:text="OPPO"
-						android:textSize="15sp"
 						android:textColor="@android:color/black"
-						android:layout_gravity="center_horizontal"
-						android:padding="8dp" />
+						android:textSize="16sp" />
 
 					<View
 						android:layout_width="match_parent"
@@ -212,7 +205,7 @@
 				android:id="@+id/tvSeemore"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="see more"
+				android:text="See more"
 				android:textSize="14sp"
 				android:textColor="@android:color/holo_orange_dark"
 				android:layout_gravity="end"

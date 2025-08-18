@@ -9,7 +9,7 @@ public class SanPham {
     private int maDanhMuc;
     private int hinhAnhResId; // truyền vào hình ảnh lấy từ Drawable
 
-    public SanPham(int maSanPham, String tenSanPham, String moTa, double gia, int soLuongTon, int maDanhMuc) {
+    public SanPham(int maSanPham, String tenSanPham, String moTa, double gia, int soLuongTon) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.moTa = moTa;
