@@ -23,6 +23,7 @@ import com.hungnn.du_an_1.ActivityPhu.ProfileActivity;
 import com.hungnn.du_an_1.ActivityPhu.HotNewsActivity;
 import com.hungnn.du_an_1.ActivityPhu.MemberManagementActivity;
 import com.hungnn.du_an_1.ActivityPhu.AllProductsActivity;
+import com.hungnn.du_an_1.ActivityPhu.OffersActivity;
 import com.hungnn.du_an_1.LoginActivity;
 import com.hungnn.du_an_1.Model.SanPham;
 import com.hungnn.du_an_1.Utils.LogoutManager;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnMenu;
     private PopupWindow menuPopupWindow;
     private TextView tvSeemore;
-    
+
     // Danh sách tất cả sản phẩm
     private List<SanPham> allProducts;
     private List<SanPham> currentFilteredProducts;
@@ -63,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Khởi tạo danh sách sản phẩm
         initializeProducts();
-        
+
         // Hiển thị sản phẩm iPhone mặc định
         filterProductsByCategory(1);
-        
+
         // Thiết lập adapter
         productAdapter = new ProductAdapter(this, currentFilteredProducts);
         recyclerViewProducts.setAdapter(productAdapter);
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     //Hàm tạo danh sách mẫu hiển thị recycleView trong activity_main
     private void initializeProducts() {
         allProducts = new ArrayList<>();
-        
+
         // Sử dụng tên drawable (hãy thêm ảnh vào res/drawable với các tên dưới đây).
         int img16ProMax = getDrawableIdByName("ic_iphone16_pro_max");
         int img15ProMax = getDrawableIdByName("ic_iphone15_pro_max");
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 currentFilteredProducts.add(sanPham);
             }
         }
-        
+
         // Cập nhật adapter với danh sách đã lọc
         if (productAdapter != null) {
             productAdapter.updateProducts(currentFilteredProducts);
@@ -228,7 +229,8 @@ public class MainActivity extends AppCompatActivity {
             }
             
             content.findViewById(R.id.popup_my_offers).setOnClickListener(x -> {
-                Toast.makeText(MainActivity.this, "My offers", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, OffersActivity.class);
+                startActivity(intent);
                 menuPopupWindow.dismiss();
             });
             
@@ -329,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
     private void selectCategory(int categoryIndex) {
         resetAllTabs();
         int maDanhMuc = 0;
-        
+
         switch (categoryIndex) {
             case 0: // IPHONE
                 tvIphone.setTextColor(0xFFFA4A0C);
@@ -356,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
                 maDanhMuc = 4;
                 break;
         }
-        
+
         // Lọc và hiển thị sản phẩm theo danh mục được chọn
         if (maDanhMuc > 0) {
             filterProductsByCategory(maDanhMuc);

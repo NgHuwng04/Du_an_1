@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     private  static final String DB_NANE ="ZSHop.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     public DbHelper(Context context) {
         super(context, DB_NANE, null, DB_VERSION);
     }
@@ -48,6 +48,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "gia REAL," +
                 "so_luong_ton INTEGER," +
                 "ma_danh_muc INTEGER," +
+                "hinh_anh TEXT," +
                 "FOREIGN KEY (ma_danh_muc) REFERENCES danh_muc(ma_danh_muc))");
 
         // 4. Bảng giỏ hàng
@@ -119,4 +120,5 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS nguoi_dung");
         onCreate(db);
     }
+
 }
