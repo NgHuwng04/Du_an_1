@@ -40,7 +40,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         double gia = getIntent().getDoubleExtra("gia", 0);
         int hinhAnhResId = getIntent().getIntExtra("hinhAnhResId", 0);
 
-        sanPham = new SanPham(maSanPham,tenSanPham,moTa,gia,hinhAnhResId);
+        // Khởi tạo đối tượng sản phẩm đầy đủ thông tin
+        sanPham = new SanPham();
+        sanPham.setMaSanPham(maSanPham);
+        sanPham.setTenSanPham(tenSanPham);
+        sanPham.setMoTa(moTa);
+        sanPham.setGia(gia);
+        sanPham.setHinhAnhResId(hinhAnhResId);
         favoritesManager = FavoritesManager.getInstance(this);
         cartDAO = new CartDAO(this); // Khởi tạo CartDAO
 
@@ -109,9 +115,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         int maNguoiDung = 1;
         int soLuong = 1; // Số lượng mặc định là 1
 
-        boolean success = cartDAO.addToCart(maNguoiDung, sanPham.getMaSanPham(), soLuong);
+        boolean success = cartDAO.addToCartWithProduct(maNguoiDung, sanPham, soLuong);
         if (success) {
-            Toast.makeText(this, "Đã thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+            // Sau khi thêm thành công, chuyển sang màn hình giỏ hàng
+            android.content.Intent intent = new android.content.Intent(this, CartActivity.class);
+            startActivity(intent);
         } else {
             Toast.makeText(this, "Thêm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
         }

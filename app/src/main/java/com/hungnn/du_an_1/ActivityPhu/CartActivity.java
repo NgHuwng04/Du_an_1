@@ -23,6 +23,7 @@ public class CartActivity extends AppCompatActivity {
     private ImageButton btnBack;
     private RecyclerView rvCartItems;
     private TextView tvEmptyCart; // Thêm TextView này
+    private TextView tvComplete; // dùng Button trong layout, nhưng để tương thích tìm theo id
     private CartDAO cartDAO;
     private List<GioHang> cartItems;
     private CartAdapter cartAdapter;
@@ -36,6 +37,7 @@ public class CartActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         rvCartItems = findViewById(R.id.rvCartItems);
         tvEmptyCart = findViewById(R.id.tvEmptyCart); // Ánh xạ TextView
+        android.widget.Button btnComplete = findViewById(R.id.btnComplete);
 
         // Khởi tạo DAO
         cartDAO = new CartDAO(this);
@@ -43,19 +45,30 @@ public class CartActivity extends AppCompatActivity {
         // Thiết lập RecyclerView và Adapter
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
         cartItems = new ArrayList<>();
-        cartAdapter = new CartAdapter(cartItems, position -> {
-            // Xử lý logic xóa sản phẩm khỏi giỏ hàng
-            int maGioHang = cartItems.get(position).getMaGioHang();
-            boolean success = cartDAO.removeItemFromCart(maGioHang);
-            if (success) {
-                cartItems.remove(position);
-                cartAdapter.notifyItemRemoved(position);
-                Toast.makeText(CartActivity.this, "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
+        cartAdapter = new CartAdapter(cartItems, new CartAdapter.OnCartItemActionListener() {
+            @Override
+            public void onRemove(int position) {
+                if (position < 0 || position >= cartItems.size()) return;
+                int maGioHang = cartItems.get(position).getMaGioHang();
+                boolean success = cartDAO.removeItemFromCart(maGioHang);
+                if (success) {
+                    cartItems.remove(position);
+                    cartAdapter.notifyItemRemoved(position);
+                    Toast.makeText(CartActivity.this, "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
 
-                // Kiểm tra lại sau khi xóa
-                if (cartItems.isEmpty()) {
-                    rvCartItems.setVisibility(View.GONE);
-                    tvEmptyCart.setVisibility(View.VISIBLE);
+                    if (cartItems.isEmpty()) {
+                        rvCartItems.setVisibility(View.GONE);
+                        tvEmptyCart.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onChangeQuantity(int position, int newQty) {
+                if (position < 0 || position >= cartItems.size()) return;
+                int maGioHang = cartItems.get(position).getMaGioHang();
+                if (cartDAO.updateQuantity(maGioHang, newQty)) {
+                    loadCartItems();
                 }
             }
         });
@@ -64,6 +77,13 @@ public class CartActivity extends AppCompatActivity {
         // Xử lý sự kiện nút Back
         if (btnBack != null) {
             btnBack.setOnClickListener(v -> finish());
+        }
+
+        if (btnComplete != null) {
+            btnComplete.setOnClickListener(v -> {
+                android.content.Intent intent = new android.content.Intent(CartActivity.this, CheckoutActivity.class);
+                startActivity(intent);
+            });
         }
     }
 
@@ -88,7 +108,9 @@ public class CartActivity extends AppCompatActivity {
             tvEmptyCart.setVisibility(View.GONE);
         }
 
-        // Cập nhật dữ liệu vào Adapter
+        // Đồng bộ dữ liệu activity và adapter
+        cartItems.clear();
+        cartItems.addAll(updatedCartItems);
         cartAdapter.updateCartList(updatedCartItems);
     }
 }
