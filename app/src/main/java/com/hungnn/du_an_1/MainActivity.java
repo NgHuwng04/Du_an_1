@@ -23,6 +23,7 @@ import com.hungnn.du_an_1.ActivityPhu.ProfileActivity;
 import com.hungnn.du_an_1.ActivityPhu.HotNewsActivity;
 import com.hungnn.du_an_1.ActivityPhu.MemberManagementActivity;
 import com.hungnn.du_an_1.ActivityPhu.AllProductsActivity;
+import com.hungnn.du_an_1.ActivityPhu.OffersActivity;
 import com.hungnn.du_an_1.LoginActivity;
 import com.hungnn.du_an_1.Model.SanPham;
 import com.hungnn.du_an_1.Utils.LogoutManager;
@@ -228,7 +229,8 @@ public class MainActivity extends AppCompatActivity {
             }
             
             content.findViewById(R.id.popup_my_offers).setOnClickListener(x -> {
-                Toast.makeText(MainActivity.this, "My offers", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, OffersActivity.class);
+                startActivity(intent);
                 menuPopupWindow.dismiss();
             });
             

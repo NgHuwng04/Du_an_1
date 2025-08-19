@@ -74,6 +74,12 @@
         <activity
             android:name=".ActivityPhu.AllProductsActivity"
             android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.CheckoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.OffersActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
