@@ -129,6 +129,28 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/popup_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:background="?attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_category"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="12dp"
+                android:text="Quản lý danh mục"
+                android:textColor="#222222"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/popup_doanhthu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
