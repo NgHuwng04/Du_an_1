@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
             View productStorage = content.findViewById(R.id.popup_product_storage);
             View billManager = content.findViewById(R.id.popup_bill_manager);
             View doanhThu = content.findViewById(R.id.popup_doanhthu);
+            View danhMuc = content.findViewById(R.id.popup_category);
 
             if (!isAdmin) {
                 // Ẩn các mục trong menu nếu không phải là admin
@@ -190,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 productStorage.setVisibility(View.GONE);
                 billManager.setVisibility(View.GONE);
                 doanhThu.setVisibility(View.GONE);
+                danhMuc.setVisibility(View.GONE);
             }
 
             content.findViewById(R.id.popup_hot_news).setOnClickListener(x -> {
@@ -213,6 +215,10 @@ public class MainActivity extends AppCompatActivity {
                 
                 content.findViewById(R.id.popup_bill_manager).setOnClickListener(x -> {
                     Toast.makeText(MainActivity.this, "Quản lý đơn hàng", Toast.LENGTH_SHORT).show();
+                    menuPopupWindow.dismiss();
+                });
+                content.findViewById(R.id.popup_category).setOnClickListener(x -> {
+                    Toast.makeText(MainActivity.this, "Quản lý danh mục", Toast.LENGTH_SHORT).show();
                     menuPopupWindow.dismiss();
                 });
                 content.findViewById(R.id.popup_doanhthu).setOnClickListener(x -> {
