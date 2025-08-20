@@ -64,12 +64,6 @@ public class QuanLyDonHangActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        Button btnThemDonHang = findViewById(R.id.btnThemDonHang);
-        btnThemDonHang.setOnClickListener(v -> {
-            showDialogThemDonHang();
-        });
-
-
 
 
         // Thiết lập Spinner
@@ -110,57 +104,11 @@ public class QuanLyDonHangActivity extends AppCompatActivity {
 
     private List<DonHang> getDonHangFakeData() {
         List<DonHang> list = new ArrayList<>();
-        list.add(new DonHang(1,1,"12-7-2025", "Chờ xử lý",1200000));
-        list.add(new DonHang(1,1,"12-7-2025", "Chờ xử lý",1200000));
-        list.add(new DonHang(1,1,"12-7-2025", "Chờ xử lý",1200000));
-        list.add(new DonHang(1,1,"12-7-2025", "Chờ xử lý",1200000));
+        list.add(new DonHang(1,1,"12-8-2025", "Chờ xử lý",1200000));
+        list.add(new DonHang(2,2,"10-7-2025", "Chờ xử lý",1200000));
+        list.add(new DonHang(3,3,"1-5-2025", "Chờ xử lý",1200000));
+        list.add(new DonHang(4,4,"13-3-2025", "Chờ xử lý",1200000));
         return list;
     }
-
-    private void showDialogThemDonHang() {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_them_don_hang, null);
-        AlertDialog dialog = new AlertDialog.Builder(this).setView(view).create();
-
-        EditText edtMaNguoiDung = view.findViewById(R.id.edtMaNguoiDung);
-        EditText edtNgayDat = view.findViewById(R.id.edtNgayDat);
-        EditText edtTongTien = view.findViewById(R.id.edtTongTien);
-        Spinner spTrangThai = view.findViewById(R.id.spTrangThai);
-        Button btnLuu = view.findViewById(R.id.btnLuu);
-        Button btnHuy = view.findViewById(R.id.btnHuy);
-
-        ArrayAdapter<String> adapterTrangThai = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,
-                new String[]{"Chờ cử lý", "đang giao", "đã giao", "hủy"});
-        adapterTrangThai.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spTrangThai.setAdapter(adapterTrangThai);
-
-        btnLuu.setOnClickListener(v -> {
-            try {
-                DonHang dh = new DonHang();
-                dh.setMaNguoiDung(Integer.parseInt(edtMaNguoiDung.getText().toString()));
-                dh.setNgayDat(edtNgayDat.getText().toString());
-                dh.setTongTien(Double.parseDouble(edtTongTien.getText().toString()));
-                dh.setTrangThai(spTrangThai.getSelectedItem().toString());
-
-                DonHangDAO dao = new DonHangDAO(this);
-                long result = dao.themDonHang(dh);
-                if (result!=1) {
-                    Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    danhSachDonHang.add(0, dh);
-                    locDonHangTheoTrangThai(spinnerTrangThai.getSelectedItem().toString());
-                    dialog.dismiss();
-                } else {
-                    Toast.makeText(this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(this, "Lỗi nhập dữ liệu", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnHuy.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
-    }
-
-
 
 }

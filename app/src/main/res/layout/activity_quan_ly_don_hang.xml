@@ -34,13 +34,4 @@
         android:padding="8dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
-    <Button
-        android:id="@+id/btnThemDonHang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="➕ Thêm đơn hàng"
-        android:textColor="#FFFFFF"
-        android:background="#2196F3"
-        android:layout_margin="12dp" />
-
 </LinearLayout>

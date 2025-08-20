@@ -72,7 +72,6 @@ public class DonHangDAO {
     public boolean xoaDonHang(int maDonHang) {
         return db.delete("don_hang", "ma_don_hang = ?", new String[]{String.valueOf(maDonHang)}) > 0;
     }
-
     // Lấy đơn hàng theo mã
     public DonHang layDonHangTheoMa(int maDonHang) {
         Cursor cursor = db.rawQuery("SELECT * FROM don_hang WHERE ma_don_hang = ?", new String[]{String.valueOf(maDonHang)});
