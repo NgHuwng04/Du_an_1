@@ -1,7 +1,6 @@
 package com.hungnn.du_an_1.ActivityPhu;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
