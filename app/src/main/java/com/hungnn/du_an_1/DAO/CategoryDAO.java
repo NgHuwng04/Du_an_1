@@ -42,4 +42,17 @@ public class CategoryDAO {
         cursor.close();
         return list;
     }
+
+    public String getCategoryNameById(int categoryId) {
+        String categoryName = "";
+        if (db == null || !db.isOpen()) {
+            open();
+        }
+        try (Cursor cursor = db.rawQuery("SELECT ten_danh_muc FROM danh_muc WHERE ma_danh_muc = ?", new String[]{String.valueOf(categoryId)})) {
+            if (cursor.moveToFirst()) {
+                categoryName = cursor.getString(0);
+            }
+        }
+        return categoryName;
+    }
 }
