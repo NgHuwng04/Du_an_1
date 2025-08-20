@@ -83,6 +83,9 @@
         <activity
             android:name=".ActivityPhu.OffersActivity"
             android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.RevenueActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

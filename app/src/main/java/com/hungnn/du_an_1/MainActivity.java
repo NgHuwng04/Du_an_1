@@ -25,6 +25,7 @@ import com.hungnn.du_an_1.ActivityPhu.MemberManagementActivity;
 import com.hungnn.du_an_1.ActivityPhu.AllProductsActivity;
 import com.hungnn.du_an_1.ActivityPhu.OffersActivity;
 import com.hungnn.du_an_1.ActivityPhu.QuanLyDonHangActivity;
+import com.hungnn.du_an_1.ActivityPhu.RevenueActivity;
 import com.hungnn.du_an_1.Model.SanPham;
 import com.hungnn.du_an_1.Utils.LogoutManager;
 import com.hungnn.du_an_1.Utils.UserManager;
@@ -224,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
                     menuPopupWindow.dismiss();
                 });
                 content.findViewById(R.id.popup_doanhthu).setOnClickListener(x -> {
-                    Toast.makeText(MainActivity.this, "Thống kê doanh thu", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, RevenueActivity.class);
+                    startActivity(intent);
                     menuPopupWindow.dismiss();
                 });
             }
