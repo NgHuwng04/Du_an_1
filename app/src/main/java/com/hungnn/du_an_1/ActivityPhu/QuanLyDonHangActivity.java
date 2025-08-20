@@ -1,20 +1,13 @@
-package com.hungnn.du_an_1;
+package com.hungnn.du_an_1.ActivityPhu;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -24,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hungnn.du_an_1.DAO.DonHangDAO;
 import com.hungnn.du_an_1.Model.DonHang;
+import com.hungnn.du_an_1.R;
 import com.hungnn.du_an_1.adapter.DonHangAdapter;
 
 import java.util.ArrayList;

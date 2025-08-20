@@ -13,17 +13,25 @@
         android:theme="@style/Theme.Du_an_1"
         tools:targetApi="31">
         <activity
-            android:name=".CategoryListActivity"
+            android:name=".ActivityPhu.CategoryListActivity"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,13 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WelcomeActivity"
-            android:exported="true"/>
-        <activity
             android:name=".ActivityPhu.HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityPhu.HotNewsActivity"
             android:exported="false" />
         <activity
             android:name=".ActivityPhu.FavoritesActivity"
@@ -55,6 +57,12 @@
             android:name=".ActivityPhu.ProductDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".ActivityPhu.HotNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.NewsDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ActivityPhu.MemberManagementActivity"
             android:exported="false" />
         <activity
@@ -65,6 +73,9 @@
             android:exported="false" />
         <activity
             android:name=".ActivityPhu.AllProductsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.QuanLyDonHangActivity"
             android:exported="false" />
         <activity
             android:name=".ActivityPhu.CheckoutActivity"
