@@ -5,6 +5,13 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string-array name="danh_sach_trang_thai">
+        <item>Chờ xử lý</item>
+        <item>Đang giao</item>
+        <item>Đã giao</item>
+        <item>Đã hủy</item>
+    </string-array>
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
