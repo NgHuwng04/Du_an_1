@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     private  static final String DB_NANE ="ZSHop.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     public DbHelper(Context context) {
         super(context, DB_NANE, null, DB_VERSION);
     }
@@ -109,16 +109,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS thong_ke");
-        db.execSQL("DROP TABLE IF EXISTS bai_viet");
-        db.execSQL("DROP TABLE IF EXISTS danh_gia");
-        db.execSQL("DROP TABLE IF EXISTS chi_tiet_don_hang");
-        db.execSQL("DROP TABLE IF EXISTS don_hang");
-        db.execSQL("DROP TABLE IF EXISTS gio_hang");
-        db.execSQL("DROP TABLE IF EXISTS san_pham");
-        db.execSQL("DROP TABLE IF EXISTS danh_muc");
-        db.execSQL("DROP TABLE IF EXISTS nguoi_dung");
-        onCreate(db);
+        if (oldVersion < 3) {
+            // Thêm các cột mới vào bảng don_hang
+            try {
+                db.execSQL("ALTER TABLE don_hang ADD COLUMN dia_chi_giao TEXT");
+                db.execSQL("ALTER TABLE don_hang ADD COLUMN so_dien_thoai TEXT");
+                db.execSQL("ALTER TABLE don_hang ADD COLUMN phuong_thuc_thanh_toan TEXT");
+            } catch (Exception e) {
+                // Nếu cột đã tồn tại thì bỏ qua
+            }
+        }
     }
 
 }

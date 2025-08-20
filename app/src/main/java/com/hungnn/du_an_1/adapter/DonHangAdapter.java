@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_don_hang_admin, parent, false);
+                .inflate(R.layout.item_order_history, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,8 +54,8 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DonHang dh = danhSach.get(position);
 
-        holder.tvMaDonHang.setText("Mã đơn: #" + dh.getMaDonHang());
-        holder.tvNgayDat.setText("Ngày đặt: " + dh.getNgayDat());
+        holder.tvMaDonHang.setText("Đơn hàng #" + dh.getMaDonHang());
+        holder.tvNgayDat.setText("Ngày: " + dh.getNgayDat());
 
         //  Ánh xạ trạng thái hiển thị
         String trangThaiHienThi = hienThiTrangThai(dh.getTrangThai());
@@ -228,15 +229,15 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvMaDonHang, tvNgayDat, tvTrangThai, tvTongTien;
-        Button btnSua, btnXoa;
+        android.widget.ImageButton btnSua, btnXoa;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvMaDonHang = itemView.findViewById(R.id.tvMaDonHang);
-            tvNgayDat = itemView.findViewById(R.id.tvNgayDat);
-            tvTrangThai = itemView.findViewById(R.id.tvTrangThai);
-            tvTongTien = itemView.findViewById(R.id.tvTongTien);
-            btnSua = itemView.findViewById(R.id.btnSua);
-            btnXoa = itemView.findViewById(R.id.btnXoa);
+            tvMaDonHang = itemView.findViewById(R.id.tvOrderId);
+            tvNgayDat = itemView.findViewById(R.id.tvOrderDate);
+            tvTrangThai = itemView.findViewById(R.id.tvOrderStatus);
+            tvTongTien = itemView.findViewById(R.id.tvOrderTotal);
+            btnSua = itemView.findViewById(R.id.btnEditOrder);
+            btnXoa = itemView.findViewById(R.id.btnDeleteOrder);
         }
     }
 }
