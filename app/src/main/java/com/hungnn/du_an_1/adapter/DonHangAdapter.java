@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hungnn.du_an_1.DAO.DonHangDAO;
 import com.hungnn.du_an_1.Model.DonHang;
-import com.hungnn.du_an_1.QuanLyDonHangActivity;
 import com.hungnn.du_an_1.R;
 
 import java.text.NumberFormat;

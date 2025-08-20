@@ -1,11 +1,8 @@
-package com.hungnn.du_an_1;
+package com.hungnn.du_an_1.ActivityPhu;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -15,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hungnn.du_an_1.DAO.CategoryDAO;
 import com.hungnn.du_an_1.Model.DanhMuc;
+import com.hungnn.du_an_1.R;
 import com.hungnn.du_an_1.adapter.CategoryAdapter;
 
 import java.util.List;
