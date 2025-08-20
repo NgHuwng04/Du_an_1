@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Du_an_1"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityPhu.AddEditProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPhu.QuanLySanPhamActivity"
+            android:exported="false" />
+        <activity
             android:name=".ActivityPhu.CategoryListActivity"
             android:exported="false" />
         <activity
@@ -20,18 +26,13 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".WelcomeActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
