@@ -4,25 +4,38 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.hungnn.du_an_1.Model.DanhMuc;
 import com.hungnn.du_an_1.R;
-
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     private Context context;
     private List<DanhMuc> categoryList;
+    private OnCategoryActionListener listener;
 
-    public CategoryAdapter(Context context, List<DanhMuc> categoryList) {
+    // Interface để giao tiếp với Activity
+    public interface OnCategoryActionListener {
+        void onEdit(DanhMuc category);
+        void onDelete(DanhMuc category);
+    }
+
+    public CategoryAdapter(Context context, List<DanhMuc> categoryList, OnCategoryActionListener listener) {
         this.context = context;
         this.categoryList = categoryList;
+        this.listener = listener;
     }
+
+    public void updateList(List<DanhMuc> newList) {
+        categoryList.clear();
+        categoryList.addAll(newList);
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
@@ -36,6 +49,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         DanhMuc danhMuc = categoryList.get(position);
         holder.tvTenDanhMuc.setText(danhMuc.getTenDanhMuc());
         holder.tvMoTa.setText(danhMuc.getMoTa());
+
+        // Xử lý sự kiện cho các nút mới
+        holder.btnEdit.setOnClickListener(v -> listener.onEdit(danhMuc));
+        holder.btnDelete.setOnClickListener(v -> listener.onDelete(danhMuc));
     }
 
     @Override
@@ -45,11 +62,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView tvTenDanhMuc, tvMoTa;
+        ImageButton btnEdit, btnDelete;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTenDanhMuc = itemView.findViewById(R.id.tvTenDanhMuc);
             tvMoTa = itemView.findViewById(R.id.tvMoTa);
+            btnEdit = itemView.findViewById(R.id.btnEditCategory);
+            btnDelete = itemView.findViewById(R.id.btnDeleteCategory);
         }
     }
 }

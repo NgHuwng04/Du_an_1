@@ -1,9 +1,9 @@
 package com.hungnn.du_an_1.DAO;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.hungnn.du_an_1.Database.DbHelper;
 import com.hungnn.du_an_1.Model.DanhMuc;
 
@@ -26,33 +26,45 @@ public class CategoryDAO {
         dbHelper.close();
     }
 
+    // Lấy tất cả danh mục
     public List<DanhMuc> getAllCategories() {
         List<DanhMuc> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM danh_muc", null);
-
+        String query = "SELECT * FROM danh_muc";
+        Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("ma_danh_muc"));
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("ten_danh_muc"));
-                String desc = cursor.getString(cursor.getColumnIndexOrThrow("mo_ta"));
-
-                list.add(new DanhMuc(id, name, desc));
+                DanhMuc category = new DanhMuc();
+                category.setMaDanhMuc(cursor.getInt(cursor.getColumnIndexOrThrow("ma_danh_muc")));
+                category.setTenDanhMuc(cursor.getString(cursor.getColumnIndexOrThrow("ten_danh_muc")));
+                category.setMoTa(cursor.getString(cursor.getColumnIndexOrThrow("mo_ta")));
+                list.add(category);
             } while (cursor.moveToNext());
         }
         cursor.close();
         return list;
     }
 
-    public String getCategoryNameById(int categoryId) {
-        String categoryName = "";
-        if (db == null || !db.isOpen()) {
-            open();
-        }
-        try (Cursor cursor = db.rawQuery("SELECT ten_danh_muc FROM danh_muc WHERE ma_danh_muc = ?", new String[]{String.valueOf(categoryId)})) {
-            if (cursor.moveToFirst()) {
-                categoryName = cursor.getString(0);
-            }
-        }
-        return categoryName;
+    // Thêm danh mục mới
+    public boolean insertCategory(DanhMuc category) {
+        ContentValues values = new ContentValues();
+        values.put("ten_danh_muc", category.getTenDanhMuc());
+        values.put("mo_ta", category.getMoTa());
+        long result = db.insert("danh_muc", null, values);
+        return result != -1;
+    }
+
+    // Cập nhật danh mục
+    public boolean updateCategory(DanhMuc category) {
+        ContentValues values = new ContentValues();
+        values.put("ten_danh_muc", category.getTenDanhMuc());
+        values.put("mo_ta", category.getMoTa());
+        int result = db.update("danh_muc", values, "ma_danh_muc = ?", new String[]{String.valueOf(category.getMaDanhMuc())});
+        return result > 0;
+    }
+
+    // Xóa danh mục
+    public boolean deleteCategory(int categoryId) {
+        int result = db.delete("danh_muc", "ma_danh_muc = ?", new String[]{String.valueOf(categoryId)});
+        return result > 0;
     }
 }
