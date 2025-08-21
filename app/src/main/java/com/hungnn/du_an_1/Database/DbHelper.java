@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     private  static final String DB_NANE ="ZSHop.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     public DbHelper(Context context) {
         super(context, DB_NANE, null, DB_VERSION);
     }
@@ -65,6 +65,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 "ma_don_hang INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "ma_nguoi_dung INTEGER," +
                 "ngay_dat TEXT," +
+                "dia_chi_giao TEXT," +
+                "so_dien_thoai TEXT," +
+                "phuong_thuc_thanh_toan TEXT," +
                 "trang_thai TEXT CHECK(trang_thai IN ('cho_xu_ly', 'dang_giao', 'da_giao', 'huy'))," +
                 "tong_tien REAL," +
                 "FOREIGN KEY (ma_nguoi_dung) REFERENCES nguoi_dung(ma_nguoi_dung))");
@@ -109,15 +112,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 3) {
-            // Thêm các cột mới vào bảng don_hang
-            try {
-                db.execSQL("ALTER TABLE don_hang ADD COLUMN dia_chi_giao TEXT");
-                db.execSQL("ALTER TABLE don_hang ADD COLUMN so_dien_thoai TEXT");
-                db.execSQL("ALTER TABLE don_hang ADD COLUMN phuong_thuc_thanh_toan TEXT");
-            } catch (Exception e) {
-                // Nếu cột đã tồn tại thì bỏ qua
-            }
+        if (oldVersion < 4) {
+            // Thêm các cột mới vào bảng don_hang (an toàn khi đã tồn tại)
+            try { db.execSQL("ALTER TABLE don_hang ADD COLUMN dia_chi_giao TEXT"); } catch (Exception ignored) {}
+            try { db.execSQL("ALTER TABLE don_hang ADD COLUMN so_dien_thoai TEXT"); } catch (Exception ignored) {}
+            try { db.execSQL("ALTER TABLE don_hang ADD COLUMN phuong_thuc_thanh_toan TEXT"); } catch (Exception ignored) {}
         }
     }
 

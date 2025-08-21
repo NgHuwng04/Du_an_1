@@ -14,6 +14,7 @@ import com.hungnn.du_an_1.DAO.CartDAO;
 import com.hungnn.du_an_1.Model.GioHang;
 import com.hungnn.du_an_1.R;
 import com.hungnn.du_an_1.adapter.CartAdapter;
+import com.hungnn.du_an_1.Utils.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class CartActivity extends AppCompatActivity {
     private CartDAO cartDAO;
     private List<GioHang> cartItems;
     private CartAdapter cartAdapter;
+    private UserManager userManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class CartActivity extends AppCompatActivity {
 
         // Khởi tạo DAO
         cartDAO = new CartDAO(this);
+        userManager = UserManager.getInstance(this);
 
         // Thiết lập RecyclerView và Adapter
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
@@ -95,8 +98,15 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void loadCartItems() {
-        // Giả sử maNguoiDung = 1, bạn có thể thay thế bằng ID người dùng thực tế
-        int maNguoiDung = 1;
+        // Lấy ID người dùng thực tế từ UserManager
+        int maNguoiDung = userManager.getUserId();
+        if (maNguoiDung == -1) {
+            // Chưa đăng nhập
+            rvCartItems.setVisibility(View.GONE);
+            tvEmptyCart.setVisibility(View.VISIBLE);
+            tvEmptyCart.setText("Vui lòng đăng nhập để xem giỏ hàng");
+            return;
+        }
         List<GioHang> updatedCartItems = cartDAO.getCartItems(maNguoiDung);
 
         // Cập nhật giao diện dựa trên dữ liệu giỏ hàng
