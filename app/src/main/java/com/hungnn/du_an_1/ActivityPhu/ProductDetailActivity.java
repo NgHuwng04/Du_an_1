@@ -12,6 +12,7 @@ import com.hungnn.du_an_1.DAO.CartDAO;
 import com.hungnn.du_an_1.Model.SanPham;
 import com.hungnn.du_an_1.R;
 import com.hungnn.du_an_1.Utils.FavoritesManager;
+import com.hungnn.du_an_1.Utils.UserManager;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -110,8 +111,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     // Phương thức thêm sản phẩm vào giỏ hàng
     private void addToCart() {
-        // Giả sử maNguoiDung = 1, bạn có thể lấy ID người dùng từ SharedPreferences hoặc Auth
-        int maNguoiDung = 1;
+        // Lấy ID người dùng từ UserManager thay vì sử dụng giá trị cố định
+        int maNguoiDung = UserManager.getInstance(this).getUserId();
+        if (maNguoiDung == -1) {
+            Toast.makeText(this, "Vui lòng đăng nhập để thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+            return;
+        }
         int soLuong = 1; // Số lượng mặc định là 1
 
         boolean success = cartDAO.addToCartWithProduct(maNguoiDung, sanPham, soLuong);

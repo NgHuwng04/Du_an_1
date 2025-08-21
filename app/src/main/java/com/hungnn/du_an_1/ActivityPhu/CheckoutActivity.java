@@ -104,7 +104,12 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void bindTotal() {
-        int userId = userManager.getUserId() == -1 ? 1 : userManager.getUserId();
+        int userId = userManager.getUserId();
+        if (userId == -1) {
+            subtotal = 0.0;
+            tvTotal.setText("0");
+            return;
+        }
         List<GioHang> items = cartDAO.getCartItems(userId);
         subtotal = 0.0;
         for (GioHang it : items) {
@@ -187,7 +192,10 @@ public class CheckoutActivity extends AppCompatActivity {
             
             // Lấy thông tin người dùng
             int userId = userManager.getUserId();
-            if (userId == -1) userId = 1; // Fallback nếu không có userId
+            if (userId == -1) {
+                android.widget.Toast.makeText(this, "Vui lòng đăng nhập để thanh toán", android.widget.Toast.LENGTH_SHORT).show();
+                return;
+            }
             
             android.util.Log.d("CheckoutActivity", "User ID: " + userId);
             

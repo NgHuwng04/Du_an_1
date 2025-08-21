@@ -48,7 +48,8 @@ public class OrderDAO {
         values.put("ma_don_hang", chiTiet.getMaDonHang());
         values.put("ma_san_pham", chiTiet.getMaSanPham());
         values.put("so_luong", chiTiet.getSoLuong());
-        values.put("don_gia", chiTiet.getGia());
+        // Cột trong bảng là "gia" theo DbHelper
+        values.put("gia", chiTiet.getGia());
 
         return database.insert("chi_tiet_don_hang", null, values);
     }
