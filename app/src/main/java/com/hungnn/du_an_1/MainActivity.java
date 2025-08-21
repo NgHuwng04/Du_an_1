@@ -17,6 +17,7 @@ import android.widget.PopupWindow;
 import android.view.Gravity;
 
 import com.hungnn.du_an_1.ActivityPhu.CartActivity;
+import com.hungnn.du_an_1.ActivityPhu.CategoryListActivity;
 import com.hungnn.du_an_1.ActivityPhu.FavoritesActivity;
 import com.hungnn.du_an_1.ActivityPhu.HistoryActivity;
 import com.hungnn.du_an_1.ActivityPhu.ProfileActivity;
@@ -25,6 +26,7 @@ import com.hungnn.du_an_1.ActivityPhu.MemberManagementActivity;
 import com.hungnn.du_an_1.ActivityPhu.AllProductsActivity;
 import com.hungnn.du_an_1.ActivityPhu.OffersActivity;
 import com.hungnn.du_an_1.ActivityPhu.QuanLyDonHangActivity;
+import com.hungnn.du_an_1.ActivityPhu.QuanLySanPhamActivity;
 import com.hungnn.du_an_1.ActivityPhu.RevenueActivity;
 import com.hungnn.du_an_1.Model.SanPham;
 import com.hungnn.du_an_1.Utils.LogoutManager;
@@ -211,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
                 });
                 
                 content.findViewById(R.id.popup_product_storage).setOnClickListener(x -> {
+                    Intent intent = new Intent(MainActivity.this, QuanLySanPhamActivity.class);
+                    startActivity(intent);
                     Toast.makeText(MainActivity.this, "Quản lý sản phẩm", Toast.LENGTH_SHORT).show();
                     menuPopupWindow.dismiss();
                 });
@@ -221,6 +225,8 @@ public class MainActivity extends AppCompatActivity {
                     menuPopupWindow.dismiss();
                 });
                 content.findViewById(R.id.popup_category).setOnClickListener(x -> {
+                    Intent intent = new Intent(MainActivity.this, CategoryListActivity.class);
+                    startActivity(intent);
                     Toast.makeText(MainActivity.this, "Quản lý danh mục", Toast.LENGTH_SHORT).show();
                     menuPopupWindow.dismiss();
                 });

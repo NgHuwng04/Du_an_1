@@ -37,8 +37,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "ma_danh_muc INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "ten_danh_muc TEXT," +
                 "mo_ta TEXT)");
-        db.execSQL("INSERT INTO danh_muc (ten_danh_muc, mo_ta) VALUES (1,'Iphone', 'Đời mới nhất')");
-        db.execSQL("INSERT INTO danh_muc (ten_danh_muc, mo_ta) VALUES (2,'Samsung', 'Màn hình OLED')");
+        db.execSQL("INSERT INTO danh_muc (ten_danh_muc, mo_ta) VALUES ('Iphone', 'Đời mới nhất')");
+        db.execSQL("INSERT INTO danh_muc (ten_danh_muc, mo_ta) VALUES ('Samsung', 'Màn hình OLED')");
 
         // 3. Bảng sản phẩm
         db.execSQL("CREATE TABLE san_pham (" +
