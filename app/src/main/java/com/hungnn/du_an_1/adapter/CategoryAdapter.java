@@ -50,6 +50,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.tvTenDanhMuc.setText(danhMuc.getTenDanhMuc());
         holder.tvMoTa.setText(danhMuc.getMoTa());
 
+        // Icon theo tên danh mục
+        int iconRes = getIconForCategory(danhMuc.getTenDanhMuc());
+        ((android.widget.ImageView) holder.itemView.findViewById(R.id.imgIcon)).setImageResource(iconRes);
+
         // Xử lý sự kiện cho các nút mới
         holder.btnEdit.setOnClickListener(v -> listener.onEdit(danhMuc));
         holder.btnDelete.setOnClickListener(v -> listener.onDelete(danhMuc));
@@ -71,5 +75,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             btnEdit = itemView.findViewById(R.id.btnEditCategory);
             btnDelete = itemView.findViewById(R.id.btnDeleteCategory);
         }
+    }
+
+    private int getIconForCategory(String name) {
+        if (name == null) return R.drawable.ic_category;
+        String n = name.toLowerCase();
+        if (n.contains("iphone") || n.contains("apple") || n.startsWith("ip")) return R.drawable.ic_logo_ip;
+        if (n.contains("samsung")) return R.drawable.ic_logo_samsung;
+        if (n.contains("xiaomi")) return R.drawable.ic_logo_xiaomi;
+        if (n.contains("oppo")) return R.drawable.ic_logo_oppo;
+        return R.drawable.ic_category;
     }
 }

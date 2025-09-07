@@ -67,4 +67,12 @@ public class CategoryDAO {
         int result = db.delete("danh_muc", "ma_danh_muc = ?", new String[]{String.valueOf(categoryId)});
         return result > 0;
     }
+
+    // Kiểm tra tồn tại theo tên (không phân biệt hoa thường)
+    public boolean existsByName(String name) {
+        Cursor cursor = db.rawQuery("SELECT 1 FROM danh_muc WHERE lower(ten_danh_muc) = lower(?) LIMIT 1", new String[]{name});
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+        return exists;
+    }
 }

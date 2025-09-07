@@ -183,9 +183,9 @@ public class OrderDAO {
 
         String[] columns = {"ma_don_hang", "ma_nguoi_dung", "ngay_dat", "dia_chi_giao",
                            "so_dien_thoai", "phuong_thuc_thanh_toan", "tong_tien", "trang_thai"};
-        
-        // Chỉ lấy đơn hàng có trạng thái "da_giao" (hoàn tất) và trong khoảng thời gian
-        String selection = "trang_thai = ? AND ngay_dat BETWEEN ? AND ?";
+
+        // so sánh dạng chuỗi ISO yyyy-MM-dd là an toàn theo thứ tự từ điển
+        String selection = "trang_thai = ? AND date(ngay_dat) BETWEEN date(?) AND date(?)";
         String[] selectionArgs = {"da_giao", startDate, endDate};
         String orderBy = "ngay_dat DESC";
 

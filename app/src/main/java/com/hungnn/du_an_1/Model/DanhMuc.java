@@ -4,6 +4,7 @@ public class DanhMuc {
     private int maDanhMuc;
     private String tenDanhMuc;
     private String moTa;
+    private int iconResId;
 
     public DanhMuc() {
     }
@@ -12,6 +13,13 @@ public class DanhMuc {
         this.maDanhMuc = maDanhMuc;
         this.tenDanhMuc = tenDanhMuc;
         this.moTa = moTa;
+    }
+
+    public DanhMuc(int maDanhMuc, String tenDanhMuc, String moTa, int iconResId) {
+        this.maDanhMuc = maDanhMuc;
+        this.tenDanhMuc = tenDanhMuc;
+        this.moTa = moTa;
+        this.iconResId = iconResId;
     }
 
     public int getMaDanhMuc() {
@@ -36,5 +44,18 @@ public class DanhMuc {
 
     public void setMoTa(String moTa) {
         this.moTa = moTa;
+    }
+
+    public int getIconResId() {
+        return iconResId;
+    }
+
+    public void setIconResId(int iconResId) {
+        this.iconResId = iconResId;
+    }
+
+    @Override
+    public String toString() {
+        return tenDanhMuc == null ? "" : tenDanhMuc;
     }
 }

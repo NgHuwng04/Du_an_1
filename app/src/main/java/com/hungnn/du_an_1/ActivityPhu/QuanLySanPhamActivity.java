@@ -37,6 +37,10 @@ public class QuanLySanPhamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quan_ly_san_pham);
 
         recyclerView = findViewById(R.id.recycler_view_san_pham);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setNavigationOnClickListener(v -> finish());
+        }
         FloatingActionButton fab = findViewById(R.id.fab_add_san_pham);
         SearchView searchView = findViewById(R.id.search_view);
         sanPhamDAO = new SanPhamDAO(this);
@@ -115,7 +119,10 @@ public class QuanLySanPhamActivity extends AppCompatActivity {
             tvTitle.setText("Sửa Sản Phẩm");
             edtTenSP.setText(sanPham.getTenSanPham());
             edtMoTa.setText(sanPham.getMoTa());
-            edtGia.setText(String.valueOf(sanPham.getGia()));
+            java.text.NumberFormat vnFmtInit = java.text.NumberFormat.getInstance(new java.util.Locale("vi","VN"));
+            vnFmtInit.setMaximumFractionDigits(0);
+            vnFmtInit.setMinimumFractionDigits(0);
+            edtGia.setText(vnFmtInit.format(Math.round(sanPham.getGia())));
             edtSoLuong.setText(String.valueOf(sanPham.getSoLuongTon()));
             for (int i = 0; i < danhMucList.size(); i++) {
                 if (danhMucList.get(i).getMaDanhMuc() == sanPham.getMaDanhMuc()) {
@@ -127,6 +134,37 @@ public class QuanLySanPhamActivity extends AppCompatActivity {
             tvTitle.setText("Thêm Sản Phẩm");
         }
 
+        // Format giá nhập: tự động chèn dấu chấm phần nghìn
+        final android.text.TextWatcher priceWatcher = new android.text.TextWatcher() {
+            private String current = "";
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(android.text.Editable s) {
+                String newText = s.toString();
+                if (newText.equals(current)) return;
+                edtGia.removeTextChangedListener(this);
+                String digits = newText.replace(".", "").replace(",", "").replaceAll("[^0-9]", "");
+                if (digits.isEmpty()) {
+                    current = "";
+                    edtGia.setText("");
+                    edtGia.addTextChangedListener(this);
+                    return;
+                }
+                try {
+                    long value = Long.parseLong(digits);
+                    java.text.NumberFormat vnFmt = java.text.NumberFormat.getInstance(new java.util.Locale("vi","VN"));
+                    vnFmt.setMaximumFractionDigits(0);
+                    vnFmt.setMinimumFractionDigits(0);
+                    current = vnFmt.format(value);
+                    edtGia.setText(current);
+                    edtGia.setSelection(current.length());
+                } catch (Exception ignored) {
+                }
+                edtGia.addTextChangedListener(this);
+            }
+        };
+        edtGia.addTextChangedListener(priceWatcher);
+
         builder.setPositiveButton(isEditMode ? "Lưu" : "Thêm", null);
         builder.setNegativeButton("Hủy", (d, which) -> d.dismiss());
 
@@ -136,7 +174,7 @@ public class QuanLySanPhamActivity extends AppCompatActivity {
             Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             button.setOnClickListener(v -> {
                 String ten = edtTenSP.getText().toString().trim();
-                String giaStr = edtGia.getText().toString().trim();
+                String giaStr = edtGia.getText().toString().trim().replace(",", "").replace(".", "");
                 String soLuongStr = edtSoLuong.getText().toString().trim();
                 DanhMuc selectedDanhMuc = (DanhMuc) spinnerDanhMuc.getSelectedItem();
 
@@ -148,7 +186,12 @@ public class QuanLySanPhamActivity extends AppCompatActivity {
                 SanPham spToSave = isEditMode ? sanPham : new SanPham();
                 spToSave.setTenSanPham(ten);
                 spToSave.setMoTa(edtMoTa.getText().toString().trim());
-                spToSave.setGia(Double.parseDouble(giaStr));
+                try {
+                    spToSave.setGia(Double.parseDouble(giaStr));
+                } catch (NumberFormatException ex) {
+                    Toast.makeText(this, "Giá không hợp lệ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 spToSave.setSoLuongTon(Integer.parseInt(soLuongStr));
                 spToSave.setMaDanhMuc(selectedDanhMuc.getMaDanhMuc());
                 spToSave.setHinhAnhResId(R.mipmap.ic_launcher);

@@ -139,19 +139,34 @@
             android:id="@+id/rbCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Card"/>
+            android:text="Card"
+            android:textColor="@color/black"
+            android:drawableStart="@drawable/ic_card_small"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingVertical="8dp"/>
 
         <RadioButton
             android:id="@+id/rbBank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bank account"/>
+            android:text="Bank account"
+            android:textColor="@color/black"
+            android:drawableStart="@drawable/ic_bankaccount_small"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingVertical="8dp"/>
 
         <RadioButton
             android:id="@+id/rbCash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cash"/>
+            android:text="Cash"
+            android:textColor="@color/black"
+            android:drawableStart="@drawable/ic_cash_small"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:paddingVertical="8dp"/>
     </RadioGroup>
 
     <!-- Add offers row -->
