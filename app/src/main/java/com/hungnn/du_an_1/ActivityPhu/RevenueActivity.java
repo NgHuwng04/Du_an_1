@@ -29,7 +29,8 @@ public class RevenueActivity extends AppCompatActivity {
     private OrderDAO orderDAO;
     
     private Calendar startDate, endDate;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    private SimpleDateFormat displayFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    private SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +109,9 @@ public class RevenueActivity extends AppCompatActivity {
     }
 
     private void updateDateDisplay() {
-        tvStartDate.setText(dateFormat.format(startDate.getTime()));
-        tvEndDate.setText(dateFormat.format(endDate.getTime()));
-        tvDateRange.setText("Khoảng thời gian: " + dateFormat.format(startDate.getTime()) + " - " + dateFormat.format(endDate.getTime()));
+        tvStartDate.setText(displayFormat.format(startDate.getTime()));
+        tvEndDate.setText(displayFormat.format(endDate.getTime()));
+        tvDateRange.setText("Khoảng thời gian: " + displayFormat.format(startDate.getTime()) + " - " + displayFormat.format(endDate.getTime()));
     }
 
     private void calculateRevenue() {
@@ -119,8 +120,8 @@ public class RevenueActivity extends AppCompatActivity {
             
             // Lấy tất cả đơn hàng trong khoảng thời gian và có trạng thái "da_giao"
             List<DonHang> completedOrders = orderDAO.getCompletedOrdersInDateRange(
-                dateFormat.format(startDate.getTime()),
-                dateFormat.format(endDate.getTime())
+                isoFormat.format(startDate.getTime()),
+                isoFormat.format(endDate.getTime())
             );
             
             double totalRevenue = 0;

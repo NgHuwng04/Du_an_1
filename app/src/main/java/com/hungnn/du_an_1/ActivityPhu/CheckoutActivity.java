@@ -217,7 +217,8 @@ public class CheckoutActivity extends AppCompatActivity {
             // Tạo đơn hàng mới
             DonHang donHang = new DonHang();
             donHang.setMaNguoiDung(userId);
-            donHang.setNgayDat(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()));
+            // Lưu ngày theo định dạng ISO để dễ truy vấn: yyyy-MM-dd
+            donHang.setNgayDat(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
             donHang.setDiaChiGiao(tvAddress.getText().toString());
             donHang.setSoDienThoai(tvPhone.getText().toString());
             

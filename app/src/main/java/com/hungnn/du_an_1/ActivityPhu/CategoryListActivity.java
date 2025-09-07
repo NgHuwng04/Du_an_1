@@ -37,6 +37,10 @@ public class CategoryListActivity extends AppCompatActivity implements CategoryA
 
         recyclerView = findViewById(R.id.recyclerViewCategories);
         fabAddCategory = findViewById(R.id.fabAddCategory);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setNavigationOnClickListener(v -> finish());
+        }
 
         categoryDAO = new CategoryDAO(this);
         categoryList = new ArrayList<>();
@@ -56,6 +60,19 @@ public class CategoryListActivity extends AppCompatActivity implements CategoryA
     private void loadCategories() {
         categoryDAO.open();
         List<DanhMuc> updatedList = categoryDAO.getAllCategories();
+        // Auto-seed thiếu mục nào thì thêm mục đó
+        String[][] defaults = new String[][]{
+                {"iPhone", "Đời mới nhất"},
+                {"Samsung", "Màn hình OLED"},
+                {"Xiaomi", "Giá tốt, cấu hình cao"},
+                {"Oppo", "Thiết kế trẻ trung"}
+        };
+        for (String[] def : defaults) {
+            if (!categoryDAO.existsByName(def[0])) {
+                categoryDAO.insertCategory(new DanhMuc(0, def[0], def[1]));
+            }
+        }
+        updatedList = categoryDAO.getAllCategories();
         adapter.updateList(updatedList);
         categoryDAO.close();
     }
@@ -114,24 +131,32 @@ public class CategoryListActivity extends AppCompatActivity implements CategoryA
                 return;
             }
 
-            categoryDAO.open();
-            boolean success;
-            if (isEditMode) {
-                category.setTenDanhMuc(name);
-                category.setMoTa(desc);
-                success = categoryDAO.updateCategory(category);
-            } else {
-                DanhMuc newCategory = new DanhMuc(0, name, desc);
-                success = categoryDAO.insertCategory(newCategory);
-            }
-            categoryDAO.close();
+            // Xác nhận trước khi lưu
+            new AlertDialog.Builder(this)
+                .setTitle(isEditMode ? "Xác nhận lưu thay đổi" : "Xác nhận thêm mới")
+                .setMessage((isEditMode ? "Lưu thay đổi cho danh mục: " : "Thêm danh mục: ") + name + "?")
+                .setPositiveButton(isEditMode ? "Lưu" : "Thêm", (d, w) -> {
+                    categoryDAO.open();
+                    boolean success;
+                    if (isEditMode) {
+                        category.setTenDanhMuc(name);
+                        category.setMoTa(desc);
+                        success = categoryDAO.updateCategory(category);
+                    } else {
+                        DanhMuc newCategory = new DanhMuc(0, name, desc);
+                        success = categoryDAO.insertCategory(newCategory);
+                    }
+                    categoryDAO.close();
 
-            if (success) {
-                Toast.makeText(this, (isEditMode ? "Cập nhật" : "Thêm") + " thành công", Toast.LENGTH_SHORT).show();
-                loadCategories(); // Tải lại danh sách
-            } else {
-                Toast.makeText(this, (isEditMode ? "Cập nhật" : "Thêm") + " thất bại", Toast.LENGTH_SHORT).show();
-            }
+                    if (success) {
+                        Toast.makeText(this, (isEditMode ? "Cập nhật" : "Thêm") + " thành công", Toast.LENGTH_SHORT).show();
+                        loadCategories();
+                    } else {
+                        Toast.makeText(this, (isEditMode ? "Cập nhật" : "Thêm") + " thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
         });
 
         builder.setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss());

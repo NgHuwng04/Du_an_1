@@ -58,13 +58,15 @@ public class QuanLySanPhamAdapter extends RecyclerView.Adapter<QuanLySanPhamAdap
         holder.tvGiaSP.setText("Giá: " + currencyFormatter.format(sanPham.getGia()));
         holder.tvSoLuongTon.setText("Tồn kho: " + sanPham.getSoLuongTon());
 
-        int resId = sanPham.getHinhAnhResId() == 0 ? R.mipmap.ic_launcher : sanPham.getHinhAnhResId();
+        int resId = sanPham.getHinhAnhResId();
+        if (resId == 0) {
+            resId = guessImageByName(sanPham.getTenSanPham());
+            if (resId == 0) resId = R.mipmap.ic_launcher_round;
+        }
         holder.imgSP.setImageResource(resId);
 
-        // Bắt sự kiện click vào nút xóa
         holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(sanPham));
-
-        // Bắt sự kiện click vào cả item để sửa
+        holder.btnEdit.setOnClickListener(v -> listener.onEditClick(sanPham));
         holder.itemContainer.setOnClickListener(v -> listener.onEditClick(sanPham));
     }
 
@@ -77,6 +79,7 @@ public class QuanLySanPhamAdapter extends RecyclerView.Adapter<QuanLySanPhamAdap
         TextView tvTenSP, tvGiaSP, tvSoLuongTon;
         ImageView imgSP;
         ImageButton btnDelete;
+        ImageButton btnEdit;
         LinearLayout itemContainer;
 
         public ViewHolder(@NonNull View itemView) {
@@ -86,7 +89,26 @@ public class QuanLySanPhamAdapter extends RecyclerView.Adapter<QuanLySanPhamAdap
             tvSoLuongTon = itemView.findViewById(R.id.tv_so_luong_ton);
             imgSP = itemView.findViewById(R.id.img_san_pham);
             btnDelete = itemView.findViewById(R.id.btn_delete);
+            btnEdit = itemView.findViewById(R.id.btn_edit);
             itemContainer = itemView.findViewById(R.id.item_container);
         }
+    }
+
+    private int guessImageByName(String productName) {
+        if (productName == null) return 0;
+        String name = productName.toLowerCase();
+        if (name.contains("iphone 16")) return R.drawable.ic_iphone16_pro_max;
+        if (name.contains("iphone 15")) return R.drawable.ic_iphone15_pro_max;
+        if (name.contains("iphone 14") || name.contains("iphone")) return R.drawable.ic_iphone14_pro_max;
+        if (name.contains("s24") || name.contains("galaxy s24")) return R.drawable.ic_samsung_galaxy_s24;
+        if (name.contains("fold") || name.contains("zfold")) return R.drawable.ic_samsung_galaxy_zfold7;
+        if (name.contains("a16")) return R.drawable.ic_samsung_galaxy_a16;
+        if (name.contains("xiaomi 15")) return R.drawable.ic_xiaomi_15_ultra;
+        if (name.contains("xiaomi 14") || name.contains("14t")) return R.drawable.ic_xiaomi_14t_pro;
+        if (name.contains("poco")) return R.drawable.ic_xiaomi_poco_x7_pro;
+        if (name.contains("oppo reno14")) return R.drawable.ic_oppo_reno14;
+        if (name.contains("oppo reno10")) return R.drawable.ic_oppo_reno10_pro;
+        if (name.contains("oppo find")) return R.drawable.ic_oppo_find_n5;
+        return 0;
     }
 }
